@@ -8,15 +8,48 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div class='container'>
-    <%= link_to "Sign Up", new_user_registration_path %>
-    <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+  <div class="container">
     <% if user_signed_in? %>
-      <p>Welcome <%= current_user.username %>!</p>
-    <% end %>
-<%= yield %>
+        <ul class="nav nav-tabs">
+          <li><%= link_to "Home", root_path %></li>
+          <li><%= link_to "About", about_path %></li>
+          <li class="pull-right">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              <%= current_user.username %>
+              <span class="caret"></span>
+            </button>
 
-</div>
+            <ul class="dropdown-menu" aria-labelledby="userMenu">
+              <li><%= link_to "Edit Profile", edit_user_registration_path %></li>
+              <li role="separator" class="divider"></li>
+              <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
+            </ul>
+          </li>
+        </ul>
+
+        <% if flash[:notice] %>
+        <div class="alert alert-success">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <%= flash[:notice] %>
+        </div>
+      <%elsif flash[:alert] %>
+        <div class="alert alert-warning">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    <% else %>
+      <ul class="nav nav-tabs">
+        <li><%= link_to "Sign Up", new_user_registration_path %></li>
+        <li><%= link_to "Sign In", new_user_session_path %></li>
+      </ul>
+
+      <%= yield %>
+    <% end %>
+
+  </div>
 
 </body>
 </html>
