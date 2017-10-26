@@ -1,0 +1,9 @@
+<h1 class="text-center">All Blocmarks</h1>
+
+<div class="row text-center">
+  <%= link_to "New Topic", new_topic_path, class: 'btn btn-success' %>
+</div>
+
+<% @topics.each do |topic| %>
+  <h3><u><%= link_to "#" + topic.title, topic %></u></h3>
+<% end %>
