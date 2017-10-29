@@ -10,6 +10,7 @@ class BookmarksController < ApplicationController
 
   def create
     @bookmark = Bookmark.new
+    authorize @bookmark
     @bookmark.url = params[:bookmark][:url]
     @bookmark.description = params[:bookmark][:description]
     @topic = Topic.find(params[:topic_id])
@@ -31,6 +32,7 @@ class BookmarksController < ApplicationController
 
   def update
     @bookmark = Bookmark.find(params[:id])
+    authorize @bookmark
     @bookmark.url = params[:bookmark][:url]
     @bookmark.description = params[:bookmark][:description]
 
@@ -45,6 +47,7 @@ class BookmarksController < ApplicationController
 
   def destroy
     @bookmark = Bookmark.find(params[:id])
+    authorize @bookmark
 
     if @bookmark.destroy
       flash[:notice] = "\"#{@bookmark.url}\" was deleted successfully."
